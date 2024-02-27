@@ -1,10 +1,15 @@
 import { useSearchParams } from "react-router-dom";
 
-export const Pagination = ({ currentPage }) => {
+export const Pagination = ({ currentPage, total, perPage }) => {
     const [, setSearchParams] = useSearchParams();
 
+    const lastPage = Math.ceil(total / perPage);
+
     const handlePageChange = (page) => {
-        setSearchParams({ page });
+        setSearchParams((prev) => {
+            prev.set("page", page);
+            return prev;
+        });
     };
 
     const toPrevPage = () => {
@@ -20,8 +25,12 @@ export const Pagination = ({ currentPage }) => {
             <button disabled={currentPage === 1} onClick={toPrevPage}>
                 Предыдущая
             </button>
-            <span>Страница {currentPage} </span>
-            <button onClick={toNextPage}>Следующая</button>
+            <span>
+                Страница {currentPage} из {lastPage}
+            </span>
+            <button disabled={currentPage === lastPage} onClick={toNextPage}>
+                Следующая
+            </button>
         </div>
     );
 };

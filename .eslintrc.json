@@ -17,6 +17,7 @@
         "strict-boolean-expressions": 0,
         "no-confusing-void-expression": 0,
         "explicit-function-return-type": 0,
-        "indent": "off"
+        "indent": "off",
+        "multiline-ternary": 0
     }
 }

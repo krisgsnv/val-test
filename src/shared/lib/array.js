@@ -6,3 +6,7 @@ export const removeDuplicateById = (array) => {
     const acc = new Set();
     return array.filter(({ id }) => (acc.has(id) ? false : acc.add(id)));
 };
+
+export const isNotEmpty = (array) => {
+    return array?.length > 0;
+};
