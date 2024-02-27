@@ -4,6 +4,8 @@ import { ProductList } from "@/entities/ProductList";
 import { api } from "@/shared/api";
 import { removeDuplicateFromArray, isNotEmpty } from "@/shared/lib/array";
 
+import "./index.scss";
+
 export const ProductContext = createContext(null);
 
 const App = () => {
@@ -28,7 +30,7 @@ const App = () => {
 
     return (
         <ProductContext.Provider value={{ ids }}>
-            {ids?.length > 0 && <ProductList />}
+            <main className="p-3">{ids?.length > 0 && <ProductList />}</main>
         </ProductContext.Provider>
     );
 };

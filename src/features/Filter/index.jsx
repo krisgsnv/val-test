@@ -56,27 +56,37 @@ export const Filter = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            {fields.map((field) => {
-                return (
-                    <label key={field}>
-                        <input
-                            type="radio"
-                            name="filterName"
-                            value={field}
-                            checked={filter.filterName === field}
-                            onChange={handleFilterNameChange}
-                        />
-                        {fieldName[field] || field}
-                    </label>
-                );
-            })}
+            <div>
+                {fields.map((field) => {
+                    return (
+                        <div className="form-check" key={field}>
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                name="filterName"
+                                value={field}
+                                id={field}
+                                checked={filter.filterName === field}
+                                onChange={handleFilterNameChange}
+                            />
+                            <label className="form-check-label" htmlFor={field}>
+                                {fieldName[field] || field}
+                            </label>
+                        </div>
+                    );
+                })}
+            </div>
             <input
+                className="form-control mt-2"
+                placeholder="Введите значение"
                 type="text"
                 name="filterValue"
                 value={filter.filterValue}
                 onChange={handleFilterValueChange}
             />
-            <button type="submit">Отфильтровать</button>
+            <button type="submit" className="btn btn-primary mt-2">
+                Отфильтровать
+            </button>
         </form>
     );
 };

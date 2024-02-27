@@ -4,6 +4,8 @@ export const Pagination = ({ currentPage, total, perPage }) => {
     const [, setSearchParams] = useSearchParams();
 
     const lastPage = Math.ceil(total / perPage);
+    const isFirst = currentPage === 1;
+    const isLast = currentPage === lastPage;
 
     const handlePageChange = (page) => {
         setSearchParams((prev) => {
@@ -21,16 +23,20 @@ export const Pagination = ({ currentPage, total, perPage }) => {
     };
 
     return (
-        <div>
-            <button disabled={currentPage === 1} onClick={toPrevPage}>
-                Предыдущая
-            </button>
+        <div className="pagination gap-3 mt-4 align-items-center justify-content-center">
+            <span className={`page-item ${isFirst && "disabled"}`}>
+                <button className="page-link" disabled={isFirst} onClick={toPrevPage}>
+                    Предыдущая
+                </button>
+            </span>
             <span>
                 Страница {currentPage} из {lastPage}
             </span>
-            <button disabled={currentPage === lastPage} onClick={toNextPage}>
-                Следующая
-            </button>
+            <span className={`page-item ${isLast && "disabled"}`}>
+                <button className="page-link" disabled={isLast} onClick={toNextPage}>
+                    Следующая
+                </button>
+            </span>
         </div>
     );
 };

@@ -26,13 +26,7 @@ module.exports = {
                 use: [
                     "style-loader",
                     "css-loader",
-                    {
-                        loader: "sass-loader",
-                        options: {
-                            additionalData:
-                                "@import '@/assets/scss/vars.scss';@import '@/assets/scss/mixins.scss';@import '@/assets/scss/functions.scss';"
-                        }
-                    }
+                   "sass-loader"
                 ]
             },
             {

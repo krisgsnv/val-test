@@ -42,8 +42,8 @@ export const ProductList = () => {
         <div>
             {status === "success" && (
                 <>
-                <Filter />
-                    <ul>
+                    <Filter />
+                    <ul className="list-group mt-4 gap-2 list-unstyled">
                         {idsPerPage.map((product) => (
                             <li key={product.id}>
                                 <Product {...product} />
