@@ -19,9 +19,12 @@ export const makeRequest = async (body, method = "POST") => {
         const data = await response.json();
 
         if (response.ok) {
-            return data
+            return data;
+        } else {
+            throw new Error(`Ошибка HTTP: ${response.status}`);
         }
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error(`${err?.name}: ${err?.message}`);
+        setTimeout(makeRequest(body), 3000);
     }
 };
