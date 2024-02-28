@@ -1,1 +1,6 @@
 @import "bootstrap/scss/bootstrap";
+
+.product-section {
+    height: calc(100vh - 5rem - 38px - 176px);
+    overflow-y: auto;
+}

@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-
-import { api } from "@/shared/api";
+import { replaceToDigits } from "../../shared/lib/string";
 
 const fieldName = {
     product: "По названию",
@@ -9,40 +8,35 @@ const fieldName = {
     brand: "По бренду"
 };
 
-export const Filter = () => {
-    const [fields, setFields] = useState([]);
+export const Filter = ({ fields }) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [filter, setFilter] = useState({
-        filterName: searchParams.get("filterName"),
-        filterValue: searchParams.get("filterValue")
+        filterName: searchParams.get("filterName") || "",
+        filterValue: searchParams.get("filterValue") || ""
     });
 
-    useEffect(() => {
-        api.getFields().then((data) => setFields(data));
-    }, []);
-
-    const handleFilterNameChange = ({ target }) => {
-        const filterName = target.value;
-
+    const handleFilterChange = (value, field) => {
         setFilter((prev) => {
             return {
                 ...prev,
-                filterName
+                [field]: value
             };
         });
     };
 
-    const handleFilterValueChange = ({ target }) => {
-        const filterValue = target.value;
+    const handleFilterNameChange = (e) => {
+        handleFilterChange(e.target.value, "filterName");
+    };
 
-        if (filterValue) {
-            setFilter((prev) => {
-                return {
-                    ...prev,
-                    filterValue
-                };
-            });
-        }
+    const handleFilterValueChange = (e) => {
+        if (filter.filterName === "price") {
+            handleFilterPriceValueChange(e);
+        } else handleFilterChange(e.target.value, "filterValue");
+    };
+
+    const handleFilterPriceValueChange = (e) => {
+        const value = +replaceToDigits(e.target.value);
+        handleFilterChange(value, "filterValue");
     };
 
     const handleSubmit = (event) => {
@@ -56,10 +50,10 @@ export const Filter = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div>
+            <ul className="list-unstyled">
                 {fields.map((field) => {
                     return (
-                        <div className="form-check" key={field}>
+                        <li className="form-check" key={field}>
                             <input
                                 className="form-check-input"
                                 type="radio"
@@ -72,10 +66,10 @@ export const Filter = () => {
                             <label className="form-check-label" htmlFor={field}>
                                 {fieldName[field] || field}
                             </label>
-                        </div>
+                        </li>
                     );
                 })}
-            </div>
+            </ul>
             <input
                 className="form-control mt-2"
                 placeholder="Введите значение"
@@ -84,7 +78,8 @@ export const Filter = () => {
                 value={filter.filterValue}
                 onChange={handleFilterValueChange}
             />
-            <button type="submit" className="btn btn-primary mt-2">
+
+            <button type="submit" className="btn mt-2 btn-primary">
                 Отфильтровать
             </button>
         </form>

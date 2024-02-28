@@ -24,7 +24,8 @@ export const makeRequest = async (body, method = "POST") => {
             throw new Error(`Ошибка HTTP: ${response.status}`);
         }
     } catch (err) {
-        console.error(`${err?.name}: ${err?.message}`);
-        setTimeout(makeRequest(body), 5000);
+        console.log(`Ошибка ${err?.name} ${err?.message}`)
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        return makeRequest(body);
     }
 };

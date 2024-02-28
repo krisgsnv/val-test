@@ -1,9 +1,11 @@
 import { useSearchParams } from "react-router-dom";
 
-export const Pagination = ({ currentPage, total, perPage }) => {
-    const [, setSearchParams] = useSearchParams();
+export const Pagination = ({ page, total, perPage }) => {
+    const [, setSearchParams] = useSearchParams({ page: 1 });
 
-    const lastPage = Math.ceil(total / perPage);
+    const lastPageValue = Math.ceil(total / perPage);
+    const lastPage = page > lastPageValue ? 1 : lastPageValue;
+    const currentPage = page <= lastPage ? page : 1;
     const isFirst = currentPage === 1;
     const isLast = currentPage === lastPage;
 
